@@ -9,6 +9,12 @@ require __DIR__ . "/../source/autoload.php";
  */
 fullStackPHPClassSession("destroy", __LINE__);
 
+$model = new \Source\Models\UserModel();
+
+$user = $model->load(2);
+$user->destroy();
+
+var_dump($user);
 
 /*
  * [ model destroy ] Deletar em cadeia

@@ -98,9 +98,21 @@ class UserModel extends Model
        
     }
 
-    public function destroy()
+    public function destroy(): ?UserModel
     {
+        if(!empty($this->id)){
+            $this->delete(self::$entity, "id = :id", "id = {$this->id}");
+        }
 
+        if($this->fail()){
+            $this->message = "Não foi possivel remover o usuário";
+            return null;
+        }
+
+        $this->message = "Usúario removido com sucesso";
+        $this->data = null;
+
+        return $this;
     }
 
     private function required() : bool

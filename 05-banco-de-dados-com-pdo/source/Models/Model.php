@@ -126,9 +126,18 @@ abstract class Model
          var_dump($entity, $data, $terms, $params);
      }
 
-     protected function delete()
+     protected function delete(string $entity, string $terms, string $params)
      {
-         # code...
+         try {
+             $stmt = Connect::getInstance()->prepare("DELETE FROM {$entity} WHERE {$terms}");
+             parse_str($params, $params);
+             $stmt->execute($params);
+         } catch (\PDOException $exception) {
+            $this->fail = $exception;
+            return null;
+        }
+
+         var_dump($entity, $terms, $params);
      }
 
      protected function safe(): ?array
